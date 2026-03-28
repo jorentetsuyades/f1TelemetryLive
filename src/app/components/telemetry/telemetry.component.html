@@ -1,0 +1,87 @@
+<div class="telemetry-container bg-gray-900 text-white p-6 rounded-lg">
+  <h2 class="text-2xl font-bold mb-6">F1 Telemetry</h2>
+  
+  <!-- Main Telemetry Gauges -->
+  <div class="grid grid-cols-2 gap-6 mb-8">
+    <!-- Speed Gauge -->
+    <div class="gauge-section">
+      <h3 class="text-lg font-semibold mb-2">Speed</h3>
+      <div class="gauge-display">
+        <div class="gauge-value text-3xl font-bold">{{ telemetryData.speed | number:'0.0' }} km/h</div>
+        <div class="gauge-bar bg-gray-700 rounded-full h-2 my-2">
+          <div class="gauge-fill bg-red-500 h-2 rounded-full" 
+               [style.width.%]="getSpeedPercentage()"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RPM Gauge -->
+    <div class="gauge-section">
+      <h3 class="text-lg font-semibold mb-2">RPM</h3>
+      <div class="gauge-display">
+        <div class="gauge-value text-3xl font-bold">{{ telemetryData.rpm | number:'0.0' }}</div>
+        <div class="gauge-bar bg-gray-700 rounded-full h-2 my-2">
+          <div class="gauge-fill bg-yellow-500 h-2 rounded-full" 
+               [style.width.%]="getRpmPercentage()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pedal Input -->
+  <div class="grid grid-cols-2 gap-6 mb-8">
+    <div class="gauge-section">
+      <h3 class="text-lg font-semibold mb-2">Throttle</h3>
+      <div class="gauge-display">
+        <div class="gauge-value text-2xl font-bold">{{ telemetryData.throttle | number:'0.0' }}%</div>
+        <div class="gauge-bar bg-gray-700 rounded-full h-3 my-2">
+          <div class="gauge-fill bg-green-500 h-3 rounded-full" 
+               [style.width.%]="getThrottlePercentage()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gauge-section">
+      <h3 class="text-lg font-semibold mb-2">Brake</h3>
+      <div class="gauge-display">
+        <div class="gauge-value text-2xl font-bold">{{ telemetryData.brake | number:'0.0' }}%</div>
+        <div class="gauge-bar bg-gray-700 rounded-full h-3 my-2">
+          <div class="gauge-fill bg-blue-500 h-3 rounded-full" 
+               [style.width.%]="getBrakePercentage()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Data -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">Gear</p>
+      <p class="text-2xl font-bold">{{ telemetryData.gear }}</p>
+    </div>
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">DRS</p>
+      <p class="text-2xl font-bold">{{ telemetryData.drs ? 'ON' : 'OFF' }}</p>
+    </div>
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">Lap Time</p>
+      <p class="text-2xl font-bold">{{ telemetryData.lapTime }}</p>
+    </div>
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">Fuel</p>
+      <p class="text-2xl font-bold">{{ telemetryData.fuel | number:'0.0' }}%</p>
+    </div>
+  </div>
+
+  <!-- Temperature Data -->
+  <div class="grid grid-cols-2 gap-4">
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">Track Temperature</p>
+      <p class="text-2xl font-bold">{{ telemetryData.trackTemp }}°C</p>
+    </div>
+    <div class="stat-box bg-gray-800 p-4 rounded">
+      <p class="text-sm text-gray-400">Car Temperature</p>
+      <p class="text-2xl font-bold">{{ telemetryData.carTemp }}°C</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="live-stream-container bg-gray-900 text-white p-6 rounded-lg">
+  <h2 class="text-2xl font-bold mb-6">Live Stream</h2>
+
+  <!-- Stream Configuration -->
+  <div class="config-section bg-gray-800 p-4 rounded-lg mb-6">
+    <h3 class="text-lg font-semibold mb-4">Stream Configuration</h3>
+    
+    <!-- Platform Selection -->
+    <div class="mb-4">
+      <p class="text-sm text-gray-400 mb-2">Platform</p>
+      <div class="flex gap-3">
+        <button 
+          (click)="setStream('twitch')"
+          [class.active]="streamingPlatform === 'twitch'"
+          class="platform-btn px-4 py-2 rounded transition-all duration-200"
+          [class.bg-purple-600]="streamingPlatform === 'twitch'"
+          [class.bg-gray-700]="streamingPlatform !== 'twitch'"
+        >
+          Twitch
+        </button>
+        <button 
+          (click)="setStream('youtube')"
+          [class.active]="streamingPlatform === 'youtube'"
+          class="platform-btn px-4 py-2 rounded transition-all duration-200"
+          [class.bg-red-600]="streamingPlatform === 'youtube'"
+          [class.bg-gray-700]="streamingPlatform !== 'youtube'"
+        >
+          YouTube
+        </button>
+      </div>
+    </div>
+
+    <!-- Channel Input -->
+    <div class="mb-4">
+      <p class="text-sm text-gray-400 mb-2">
+        {{ streamingPlatform === 'twitch' ? 'Channel Name' : 'Video ID / Channel' }}
+      </p>
+      <input
+        type="text"
+        [(ngModel)]="channelInput"
+        [placeholder]="streamingPlatform === 'twitch' ? 'e.g., f1tv' : 'e.g., dQw4w9WgXcQ'"
+        class="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:outline-none transition-colors"
+        [disabled]="isStreamActive"
+      />
+    </div>
+
+    <!-- Control Buttons -->
+    <div class="flex gap-3">
+      <button
+        (click)="startStream()"
+        [disabled]="isStreamActive || !channelInput.trim()"
+        class="start-btn px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded transition-all duration-200 font-semibold"
+      >
+        Start Stream
+      </button>
+      <button
+        (click)="stopStream()"
+        [disabled]="!isStreamActive"
+        class="stop-btn px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded transition-all duration-200 font-semibold"
+      >
+        Stop Stream
+      </button>
+    </div>
+  </div>
+
+  <!-- Stream Status -->
+  <div class="status-section mb-6">
+    <div class="status-badge inline-block px-3 py-1 rounded-full text-sm font-semibold"
+         [class.bg-green-900]="isStreamActive"
+         [class.text-green-300]="isStreamActive"
+         [class.bg-gray-700]="!isStreamActive"
+         [class.text-gray-300]="!isStreamActive">
+      {{ isStreamActive ? '🔴 Live' : '⚫ Offline' }}
+    </div>
+  </div>
+
+  <!-- Stream Display -->
+  <div class="stream-display-section bg-gray-800 rounded-lg overflow-hidden" *ngIf="isStreamActive">
+    <div class="aspect-video bg-black flex items-center justify-center">
+      <iframe
+        *ngIf="streamUrl"
+        [src]="streamUrl"
+        frameborder="0"
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        class="w-full h-full"
+      ></iframe>
+      <div *ngIf="!streamUrl" class="text-gray-500 text-center">
+        <p>Loading stream...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder when inactive -->
+  <div *ngIf="!isStreamActive" class="stream-placeholder bg-gray-800 rounded-lg p-12 text-center">
+    <p class="text-gray-500 text-lg">Stream is offline</p>
+    <p class="text-gray-600 text-sm">Configure a channel and click "Start Stream" to begin</p>
+  </div>
+</div>

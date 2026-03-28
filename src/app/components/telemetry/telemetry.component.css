@@ -1,0 +1,51 @@
+.telemetry-container {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.gauge-section {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gauge-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.gauge-value {
+  font-family: 'Courier New', monospace;
+  margin-bottom: 0.5rem;
+}
+
+.gauge-bar {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.gauge-fill {
+  transition: width 0.1s ease-out;
+  will-change: width;
+}
+
+.stat-box {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-box p:first-child {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-box p:last-child {
+  font-family: 'Courier New', monospace;
+}
