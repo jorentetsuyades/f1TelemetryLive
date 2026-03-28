@@ -1,0 +1,32 @@
+<div class="shaka-player-container bg-gray-900 text-white p-6 rounded-lg">
+
+  <!-- Video Player -->
+  <div class="video-container bg-gray-800 rounded-lg overflow-hidden mb-4 relative">
+    <video
+      #videoPlayer
+      controls
+      class="video-player w-full bg-black"
+      style="aspect-ratio: 16 / 9;">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Error Display -->
+  @if (error()) {
+    <div class="error-banner bg-red-900 text-red-100 p-4 rounded mb-4">
+      <div class="mb-2">❌ {{ error() }}</div>
+      <div class="text-xs text-red-200">Check browser console for detailed logs</div>
+      <button (click)="stop()" class="mt-2 text-sm px-3 py-1 bg-red-800 hover:bg-red-700 rounded">
+        Clear Error
+      </button>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (!isInitialized()) {
+    <div class="mt-4 text-center text-gray-400">
+      <div>⏳ Shaka Player loading...</div>
+      <div class="text-xs mt-2">Open browser console (F12) to see detailed logs</div>
+    </div>
+  }
+</div>

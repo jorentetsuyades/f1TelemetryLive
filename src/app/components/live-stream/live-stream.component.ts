@@ -1,61 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ShakaPlayerComponent } from '../shaka-player/shaka-player.component';
+import { Channel } from '../../services/shaka-player.service';
 
 @Component({
   selector: 'app-live-stream',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ShakaPlayerComponent],
   templateUrl: './live-stream.component.html',
-  styleUrls: ['./live-stream.component.css']
+  styleUrls: ['./live-stream.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LiveStreamComponent implements OnInit {
-  streamUrl: string = '';
-  isStreamActive: boolean = false;
-  streamingPlatform: 'twitch' | 'youtube' | 'custom' = 'twitch';
-  channelInput: string = '';
+  channelData = signal<Channel | null>(null);
+  errorMessage = signal<string | null>(null);
+  availableChannels = signal<Channel[]>([]);
 
   ngOnInit(): void {
-    this.loadStreamSettings();
+    this.initializeChannels();
   }
 
-  setStream(platform: 'twitch' | 'youtube'): void {
-    this.streamingPlatform = platform;
+  initializeChannels(): void {
+    const channels: Channel[] = [
+      {
+        name: 'BeIN Sports',
+        streamUrl: '/proxy-stream/api/beIN-Sports-1/index.m3u8',
+        category: 'Sports'
+      }
+    ];
+
+    this.availableChannels.set(channels);
+    this.loadChannelData(channels[0]);
   }
 
-  startStream(): void {
-    if (this.channelInput.trim()) {
-      this.generateStreamUrl();
-      this.isStreamActive = true;
-      this.saveStreamSettings();
-    }
-  }
-
-  stopStream(): void {
-    this.isStreamActive = false;
-    this.streamUrl = '';
-  }
-
-  generateStreamUrl(): void {
-    const channel = this.channelInput.trim();
-    
-    if (this.streamingPlatform === 'twitch') {
-      this.streamUrl = `https://twitch.tv/embed?channel=${channel}&parent=${window.location.hostname}`;
-    } else if (this.streamingPlatform === 'youtube') {
-      this.streamUrl = `https://www.youtube.com/embed/${channel}?autoplay=1`;
-    }
-  }
-
-  private saveStreamSettings(): void {
-    sessionStorage.setItem('streamChannel', this.channelInput);
-    sessionStorage.setItem('streamPlatform', this.streamingPlatform);
-  }
-
-  private loadStreamSettings(): void {
-    const savedChannel = sessionStorage.getItem('streamChannel');
-    const savedPlatform = sessionStorage.getItem('streamPlatform') as 'twitch' | 'youtube' | null;
-    
-    if (savedChannel) this.channelInput = savedChannel;
-    if (savedPlatform) this.streamingPlatform = savedPlatform;
+  loadChannelData(channel: Channel): void {
+    this.channelData.set(channel);
   }
 }

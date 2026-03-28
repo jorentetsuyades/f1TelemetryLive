@@ -16,6 +16,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "/F1-Live-with-Telemetry-web/",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -59,7 +60,8 @@
               "buildTarget": "f1-telemetry:build:production"
             },
             "development": {
-              "buildTarget": "f1-telemetry:build:development"
+              "buildTarget": "f1-telemetry:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
