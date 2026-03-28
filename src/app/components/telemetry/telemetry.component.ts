@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TelemetryService } from '../../services/telemetry.service';
 import { Subject } from 'rxjs';
@@ -22,7 +22,8 @@ interface TelemetryData {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './telemetry.component.html',
-  styleUrls: ['./telemetry.component.css']
+  styleUrls: ['./telemetry.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TelemetryComponent implements OnInit, OnDestroy {
   telemetryData: TelemetryData = {

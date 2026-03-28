@@ -1,0 +1,23 @@
+{
+  "/api": {
+    "target": "https://hls.iill.top",
+    "secure": false,
+    "changeOrigin": true,
+    "headers": {
+      "Referer": "https://app.noodtayo.com",
+      "Origin": "https://app.noodtayo.com"
+    }
+  },
+  "/proxy-stream": {
+    "target": "https://hls.iill.top",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/proxy-stream": ""
+    },
+    "headers": {
+      "Referer": "https://app.noodtayo.com",
+      "Origin": "https://app.noodtayo.com"
+    }
+  }
+}
