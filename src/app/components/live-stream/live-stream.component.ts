@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { ShakaPlayerComponent } from '../shaka-player/shaka-player.component';
 import { Channel } from '../../services/shaka-player.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-live-stream',
@@ -24,7 +25,7 @@ export class LiveStreamComponent implements OnInit {
     const channels: Channel[] = [
       {
         name: 'BeIN Sports',
-        streamUrl: '/proxy-stream/api/beIN-Sports-1/index.m3u8',
+        streamUrl: environment.streamUrl,
         category: 'Sports'
       }
     ];
