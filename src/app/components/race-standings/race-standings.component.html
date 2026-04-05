@@ -1,0 +1,78 @@
+<div class="standings-root">
+
+  <!-- Header bar -->
+  <div class="standings-header">
+    <div class="race-tag">
+      <span class="live-dot"></span>
+      RACE
+    </div>
+    <div class="lap-info">
+      LAP <span class="lap-num">{{ currentLap() }}</span>
+      <span class="lap-sep">/</span>
+      {{ totalLaps() }}
+    </div>
+  </div>
+
+  <!-- Column labels -->
+  <div class="col-labels">
+    <span class="col-pos">P</span>
+    <span class="col-logo"></span>
+    <span class="col-driver">DRIVER</span>
+    <span class="col-gap">GAP / TIME</span>
+    <span class="col-tyre">TYRE</span>
+  </div>
+
+  <!-- Driver rows -->
+  <div class="drivers-list">
+    @for (driver of drivers(); track driver.number; let i = $index) {
+      <div
+        class="driver-row"
+        [class.selected]="selectedDriverNumber() === driver.number"
+        [class.fastest-lap-row]="driver.hasFastestLap"
+        (click)="selectDriver(driver)">
+
+        <!-- Position -->
+        <div class="pos-cell" [ngClass]="getPositionClass(driver.position)">
+          {{ driver.position }}
+        </div>
+
+        <!-- Team logo -->
+        <div class="logo-cell">
+          <div class="team-logo-wrap">
+            <img
+              class="team-logo"
+              [src]="driver.teamLogo"
+              [alt]="driver.team"
+              [title]="driver.team">
+          </div>
+        </div>
+
+        <!-- Driver number + name -->
+        <div class="driver-cell">
+          <span class="driver-num" [style.color]="driver.teamColor">{{ driver.number }}</span>
+          <span class="driver-abbr">{{ driver.abbreviation }}</span>
+          @if (driver.hasFastestLap) {
+            <span class="fl-badge">FL</span>
+          }
+        </div>
+
+        <!-- Gap / Lap time -->
+        <div class="gap-cell"
+          [class.gap-leader]="driver.position === 1"
+          [class.gap-drs]="isInDrsWindow(driver, i)">
+          {{ formatGap(driver) }}
+        </div>
+
+        <!-- Tyre -->
+        <div class="tyre-cell">
+          <div class="tyre-dot" [style.background-color]="getTyreColor(driver.tyre)">
+            {{ driver.tyre }}
+          </div>
+          <span class="tyre-age">{{ driver.tyreAge }}</span>
+        </div>
+
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,252 @@
+:host {
+  display: block;
+  font-family: 'KHInterference', 'Arial Narrow', 'Arial', sans-serif;
+}
+
+.standings-root {
+  background: #0d0d0d;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────── */
+.standings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #e10600;
+}
+
+.race-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.lap-info {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.lap-num {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.lap-sep {
+  margin: 0 2px;
+  opacity: 0.6;
+}
+
+/* ── Column labels ───────────────────────── */
+.col-labels {
+  display: grid;
+  grid-template-columns: 28px 36px 1fr auto auto;
+  gap: 0 6px;
+  padding: 4px 10px 4px 10px;
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.col-pos    { grid-column: 1; text-align: center; }
+.col-logo   { grid-column: 2; }
+.col-driver { grid-column: 3; }
+.col-gap    { grid-column: 4; }
+.col-tyre   { grid-column: 5; text-align: right; padding-right: 4px; }
+
+/* ── Driver list ─────────────────────────── */
+.drivers-list {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.drivers-list::-webkit-scrollbar { width: 4px; }
+.drivers-list::-webkit-scrollbar-track { background: transparent; }
+.drivers-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ── Driver row ──────────────────────────── */
+.driver-row {
+  display: grid;
+  grid-template-columns: 28px 36px 1fr auto auto;
+  gap: 0 6px;
+  align-items: center;
+  padding: 0 10px 0 0;
+  height: 30px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s;
+  position: relative;
+}
+
+.driver-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.driver-row.selected {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.driver-row.fastest-lap-row .driver-abbr {
+  color: #c77dff;
+}
+
+.driver-row.fastest-lap-row .fl-badge {
+  display: inline-block;
+}
+
+/* ── Team logo ───────────────────────────── */
+.logo-cell {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 2px;
+}
+
+.team-logo-wrap {
+  width: 30px;
+  height: 22px;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 3px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.team-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* ── Position cell ───────────────────────── */
+.pos-cell {
+  grid-column: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0;
+}
+
+.pos-first  { color: #ffd700; }
+.pos-second { color: #c0c0c0; }
+.pos-third  { color: #cd7f32; }
+
+/* ── Driver cell ─────────────────────────── */
+.driver-cell {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.driver-num {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: 'KHInterference', 'Arial Narrow', Arial, sans-serif;
+  min-width: 26px;
+  text-align: right;
+  flex-shrink: 0;
+  letter-spacing: -0.5px;
+}
+
+.driver-abbr {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.fl-badge {
+  display: none;
+  font-size: 0.5rem;
+  font-weight: 700;
+  background: #c77dff;
+  color: #000;
+  border-radius: 3px;
+  padding: 1px 3px;
+  letter-spacing: 0.5px;
+}
+
+/* ── Gap cell ────────────────────────────── */
+.gap-cell {
+  grid-column: 4;
+  font-size: 0.72rem;
+  font-family: 'KHInterference', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+}
+
+.gap-leader {
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+.gap-drs {
+  color: #00e676;
+}
+
+/* ── Tyre cell ───────────────────────────── */
+.tyre-cell {
+  grid-column: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tyre-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 900;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.tyre-age {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 16px;
+  text-align: left;
+}

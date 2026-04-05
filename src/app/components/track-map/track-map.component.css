@@ -1,0 +1,115 @@
+.track-map-container {
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+  padding: 8px 12px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.track-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.lap-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e10600;
+  text-transform: uppercase;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.track-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.start-finish {
+  filter: drop-shadow(0 0 2px #fff);
+}
+
+.driver-dot-group {
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.driver-dot-group.selected circle:last-of-type {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+.driver-label {
+  font-size: 5px;
+  font-family: 'KHInterference', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700;
+  fill: #ffffff;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.label-selected {
+  fill: #fff;
+  font-size: 5.5px;
+}
+
+/* Legend strip */
+.legend-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 2px 0;
+  border-top: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-pos {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #888;
+  min-width: 10px;
+}
+
+.legend-abbr {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #ccc;
+  letter-spacing: 0.04em;
+}
+
+.legend-more {
+  font-size: 0.58rem;
+  color: #555;
+  margin-left: auto;
+  flex-shrink: 0;
+}

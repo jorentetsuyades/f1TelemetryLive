@@ -1,0 +1,89 @@
+<div class="track-map-container">
+  <div class="track-header">
+    <span class="track-name">MIAMI INTERNATIONAL AUTODROME</span>
+    <span class="lap-label">LIVE POSITIONS</span>
+  </div>
+
+  <svg class="track-svg" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <!-- Track shadow/glow base -->
+    <polyline
+      class="track-shadow"
+      [attr.points]="trackPoints"
+      fill="none"
+      stroke="#e10600"
+      stroke-width="10"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.15"
+    />
+    <!-- Track outline -->
+    <polyline
+      class="track-outline"
+      [attr.points]="trackPoints"
+      fill="none"
+      stroke="#444"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Track surface -->
+    <polyline
+      class="track-surface"
+      [attr.points]="trackPoints"
+      fill="none"
+      stroke="#222"
+      stroke-width="5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Start/Finish line -->
+    <line class="start-finish" x1="310" y1="49" x2="310" y2="62" stroke="#ffffff" stroke-width="2" />
+
+    <!-- Driver dots -->
+    @for (car of carPositions; track car.driver.number) {
+      <g class="driver-dot-group" [class.selected]="isSelected(car)">
+        <!-- Outer glow for selected -->
+        @if (isSelected(car)) {
+          <circle
+            [attr.cx]="car.x"
+            [attr.cy]="car.y"
+            r="7"
+            [attr.fill]="car.driver.teamColor"
+            opacity="0.4"
+          />
+        }
+        <!-- Car dot -->
+        <circle
+          [attr.cx]="car.x"
+          [attr.cy]="car.y"
+          [attr.r]="isSelected(car) ? 5 : 3.5"
+          [attr.fill]="car.driver.teamColor"
+          stroke="#fff"
+          [attr.stroke-width]="isSelected(car) ? 1.5 : 0.8"
+        />
+        <!-- Position number (only for top 3 or selected) -->
+        @if (car.driver.position <= 3 || isSelected(car)) {
+          <text
+            [attr.x]="car.x"
+            [attr.y]="car.y - 7"
+            text-anchor="middle"
+            class="driver-label"
+            [class.label-selected]="isSelected(car)"
+          >{{ car.driver.abbreviation }}</text>
+        }
+      </g>
+    }
+  </svg>
+
+  <!-- Driver legend strip -->
+  <div class="legend-strip">
+    @for (car of carPositions.slice(0, 5); track car.driver.number) {
+      <div class="legend-item">
+        <span class="legend-dot" [style.background]="car.driver.teamColor"></span>
+        <span class="legend-pos">{{ car.driver.position }}</span>
+        <span class="legend-abbr">{{ car.driver.abbreviation }}</span>
+      </div>
+    }
+    <span class="legend-more">+ {{ carPositions.length - 5 }} more</span>
+  </div>
+</div>

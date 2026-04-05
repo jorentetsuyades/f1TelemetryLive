@@ -1,21 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, ChangeDetectionStrategy,
+  ChangeDetectorRef, input, signal, inject
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TelemetryService } from '../../services/telemetry.service';
+import { RaceDriver } from '../race-standings/race-standings.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-interface TelemetryData {
-  speed: number;
-  rpm: number;
-  throttle: number;
-  brake: number;
-  gear: number;
-  drs: boolean;
-  lapTime: string;
-  trackTemp: number;
-  carTemp: number;
-  fuel: number;
-}
 
 @Component({
   selector: 'app-telemetry',
@@ -26,28 +17,21 @@ interface TelemetryData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TelemetryComponent implements OnInit, OnDestroy {
-  telemetryData: TelemetryData = {
-    speed: 0,
-    rpm: 0,
-    throttle: 0,
-    brake: 0,
-    gear: 0,
-    drs: false,
-    lapTime: '00:00.000',
-    trackTemp: 0,
-    carTemp: 0,
-    fuel: 100
-  };
+  private telemetryService = inject(TelemetryService);
+  private cdr = inject(ChangeDetectorRef);
+
+  selectedDriver = input<RaceDriver | null>(null);
+
+  telemetryData = signal(this.telemetryService.getSnapshot());
 
   private destroy$ = new Subject<void>();
-
-  constructor(private telemetryService: TelemetryService) {}
 
   ngOnInit(): void {
     this.telemetryService.getTelemetryData()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.telemetryData = data;
+      .subscribe(data => {
+        this.telemetryData.set(data);
+        this.cdr.markForCheck();
       });
   }
 
@@ -56,19 +40,16 @@ export class TelemetryComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getSpeedPercentage(): number {
-    return (this.telemetryData.speed / 350) * 100;
-  }
+  get speedPct()    { return Math.min(100, (this.telemetryData().speed    / 350)   * 100); }
+  get rpmPct()      { return Math.min(100, (this.telemetryData().rpm      / 15000) * 100); }
+  get throttlePct() { return this.telemetryData().throttle; }
+  get brakePct()    { return this.telemetryData().brake; }
+  get fuelPct()     { return this.telemetryData().fuel; }
 
-  getRpmPercentage(): number {
-    return (this.telemetryData.rpm / 15000) * 100;
-  }
-
-  getThrottlePercentage(): number {
-    return this.telemetryData.throttle;
-  }
-
-  getBrakePercentage(): number {
-    return this.telemetryData.brake;
+  get rpmColor(): string {
+    const pct = this.rpmPct;
+    if (pct > 85) return '#ff3333';
+    if (pct > 65) return '#ffd700';
+    return '#00e676';
   }
 }
