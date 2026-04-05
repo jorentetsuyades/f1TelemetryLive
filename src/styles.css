@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'KHInterference';
-  src: url('assets/fonts/KHInterference-Regular.otf') format('opentype');
+  src: url('../public/assets/fonts/KHInterference-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: 'KHInterference';
-  src: url('assets/fonts/KHInterference-Light.otf') format('opentype');
+  src: url('../public/assets/fonts/KHInterference-Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: 'KHInterference';
-  src: url('assets/fonts/KHInterference-Bold.otf') format('opentype');
+  src: url('../public/assets/fonts/KHInterference-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
